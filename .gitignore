@@ -2,3 +2,6 @@ a.out
 *.o
 CMake*
 cmake*
+*.o
+minishell
+.idea*
