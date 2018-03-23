@@ -15,4 +15,20 @@
 
 #include "../libft/includes/libft.h"
 
+#define OK 0
+#define FAIL 1
+
+typedef struct s_envlst
+{
+	char *name;
+	char *value;
+	struct s_envlst	*next;
+}               t_envlst;
+
+void print_list(t_envlst *list);
+t_envlst *allocate_node(void);
+t_envlst *copy_env(char **envp);
+void run_commands(char **command, t_envlst *list);
+void free_list(t_envlst **list);
+
 #endif

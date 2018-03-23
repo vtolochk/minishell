@@ -6,7 +6,7 @@
 #    By: vtolochk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 20:20:18 by vtolochk          #+#    #+#              #
-#    Updated: 2018/03/22 20:39:50 by vtolochk         ###   ########.fr        #
+#    Updated: 2018/03/23 15:29:26 by vtolochk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ HEADER = includes/minishell.h
 
 #LIB_SRCS = libft/srcs/*.c
 
-SRCS = minishell.c
+SRCS = minishell.c run_commands.c copy_env.c list_functions.c
 
 LIBFT = libft/libft.a
 
@@ -33,8 +33,6 @@ CC = gcc
 all: $(NAME) 
 	#$(LIBFT) 
 
-#libft/srcs/%.o: $(LIB_SRCS) $(LIB_HEADER)
-#	make -C ./libft/ re
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c -o $@ $<

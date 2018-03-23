@@ -18,6 +18,8 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 
+# define WHITESPACE (*str == ' ' || *str == '\t' || *str == '\n')
+
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
@@ -70,5 +72,6 @@ void			*ft_free_tab(void **tab);
 void			ft_strtolower(char **str);
 char			*ft_itoa_base(size_t value, size_t base);
 int				ft_printf(const char *format, ...);
+char            **ft_split_whitespaces(char *str);
 
 #endif
