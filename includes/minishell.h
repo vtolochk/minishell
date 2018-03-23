@@ -18,17 +18,20 @@
 #define OK 0
 #define FAIL 1
 
-typedef struct s_envlst
+typedef struct s_env_lst
 {
 	char *name;
 	char *value;
-	struct s_envlst	*next;
-}               t_envlst;
+	struct s_env_lst	*next;
+}               t_env_lst;
 
-void print_list(t_envlst *list);
-t_envlst *allocate_node(void);
-t_envlst *copy_env(char **envp);
-void run_commands(char **command, t_envlst *list);
-void free_list(t_envlst **list);
+void print_list(t_env_lst *list);
+t_env_lst *allocate_node(void);
+t_env_lst *copy_env(char **envp);
+void free_list(t_env_lst **list);
+void run_commands(char **command, t_env_lst *list);
+void new_process(char *process, char **argv);
+char **list_to_array(t_env_lst *list);
+void builtin_echo(char **argv);
 
 #endif

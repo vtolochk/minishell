@@ -1,45 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 20:22:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 11:14:32 by vtolochk         ###   ########.fr       */
+/*   Created: 2018/03/23 19:58:00 by vtolochk          #+#    #+#             */
+/*   Updated: 2018/03/23 19:58:00 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void new_process(char *process, char **argv)
+void builtin_echo(char **argv)
 {
-	pid_t pid;
-	pid = fork();
-	if (pid == 0)
-	{
-		execv(process, argv);
-		exit(0);
-	}
-	wait(&pid);
-}
+	int i;
+	int j;
 
-int     main(int argc, char **argv, char **envp)
-{
-	char *line;
-	t_env_lst *env_head;
-	(void)argc;
-	(void)argv;
-
-	env_head = copy_env(envp);
-	while (1)
+	i = 1;
+	while (argv[i])
 	{
-		write(0, "$> ", 3);
-		get_next_line(0, &line);
-		if (!line)
-			write(1, "\n", 1);
-		else
-			run_commands(&line, env_head);
+		j = 0;
+		while (argv[i][j])
+		{
+			while (argv[i][j] && (argv[i][j] == '\'' || argv[i][j] == '\"'))
+				j++;
+			if (!(argv[i][j]))
+				break ;
+			write(1, &argv[i][j], 1);
+			j++;
+		}
+		write(1, " ", 1);
+		i++;
 	}
-	return (OK);
+	write(1, "\n", 1);
 }

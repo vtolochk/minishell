@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void free_list(t_envlst **list)
+void free_list(t_env_lst **list)
 {
-	t_envlst *ptr;
+	t_env_lst *ptr;
 
 	while (*list)
 	{
@@ -26,18 +26,24 @@ void free_list(t_envlst **list)
 	}
 }
 
-t_envlst *allocate_node(void)
+t_env_lst *allocate_node(void)
 {
-	t_envlst *node;
+	t_env_lst *node;
 
-	node = (t_envlst *)malloc(sizeof(t_envlst));
+	node = (t_env_lst *)malloc(sizeof(t_env_lst));
 	node->name = NULL;
 	node->value = NULL;
 	node->next = NULL;
 	return (node);
 }
 
-void print_list(t_envlst *head)
+char **list_to_array(t_env_lst *list)
+{
+	(void)list;
+	return (NULL);
+}
+
+void print_list(t_env_lst *head)
 {
 	while (head->next)
 	{

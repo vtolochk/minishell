@@ -26,12 +26,12 @@ static int get_index(char *str, char c)
 	return (i);
 }
 
-t_envlst *copy_env(char **envp)
+t_env_lst *copy_env(char **envp)
 {
 	int i;
 	int index;
-	t_envlst *list;
-	t_envlst *head;
+	t_env_lst *list;
+	t_env_lst *head;
 
 	i = 0;
 	list = allocate_node();
