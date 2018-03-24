@@ -37,6 +37,20 @@ t_env_lst *allocate_node(void)
 	return (node);
 }
 
+char *get_value_by_name(t_env_lst *list, char *name)
+{
+	char *value;
+
+	value = NULL;
+	while (list)
+	{
+		if (ft_strequ(name, list->name))
+			value = list->value;
+		list = list->next;
+	}
+	return (value);
+}
+
 char **list_to_array(t_env_lst *list)
 {
 	(void)list;
@@ -47,8 +61,7 @@ void print_list(t_env_lst *head)
 {
 	while (head->next)
 	{
-		ft_printf("name: %s\n", head->name);
-		ft_printf("value: %s\n", head->value);
+		ft_printf("%s%s\n", head->name, head->value);
 		head = head->next;
 	}
 }

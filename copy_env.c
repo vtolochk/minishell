@@ -42,7 +42,7 @@ t_env_lst *copy_env(char **envp)
 		if (index == -1)
 			break ;
 		list->name = ft_strsub(envp[i], 0, index);
-		list->value = ft_strsub(envp[i], index + 1, ft_strlen(envp[i]) - index);
+		list->value = ft_strsub(envp[i], index, ft_strlen(envp[i]) - index);
 		list->next = allocate_node();
 		list = list->next;
 		i++;

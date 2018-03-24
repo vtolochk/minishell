@@ -1,45 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/23 19:58:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 19:58:00 by vtolochk         ###   ########.fr       */
+/*   Created: 2018/03/24 20:16:00 by vtolochk          #+#    #+#             */
+/*   Updated: 2018/03/24 20:16:00 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print(char *str)
+int builtin_env(char **argv, t_env_lst *list)
 {
-	while (*str)
-	{
-		if (*str != '\'' && *str != '\"')
-			write(1, &(*str), 1);
-		str++;
-	}
-}
-
-int builtin_echo(char **argv)
-{
-	int i;
-	char new_line;
-
-	i = 1;
-	new_line = 1;
-	if (ft_strequ(argv[i], "-n"))
-	{
-		new_line = 0;
-		i++;
-	}
-	while (argv[i])
-	{
-		print(argv[i++]);
-		write(1, " ", 1);
-	}
-	if (new_line)
-		write(1, "\n", 1);
-	return (OK);
+	(void)argv;
+	print_list(list);
+	return (0);
 }

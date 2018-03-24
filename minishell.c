@@ -24,22 +24,32 @@ void new_process(char *process, char **argv)
 	wait(&pid);
 }
 
+void print_promt(t_env_lst *list)
+{
+	char *pwd;
+
+	pwd = get_value_by_name(list, "PWD");
+	pwd++;
+	write(0, pwd, ft_strlen((pwd)));
+	write(0, " $> ", 4);
+}
+
 int     main(int argc, char **argv, char **envp)
 {
 	char *line;
-	t_env_lst *env_head;
+	t_env_lst *env_list;
 	(void)argc;
 	(void)argv;
 
-	env_head = copy_env(envp);
+	env_list = copy_env(envp);
 	while (1)
 	{
-		write(0, "$> ", 3);
+		print_promt(env_list);
 		get_next_line(0, &line);
 		if (!line)
 			write(1, "\n", 1);
 		else
-			run_commands(&line, env_head);
+			run_commands(&line, env_list);
 	}
 	return (OK);
 }

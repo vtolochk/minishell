@@ -28,10 +28,12 @@ typedef struct s_env_lst
 void print_list(t_env_lst *list);
 t_env_lst *allocate_node(void);
 t_env_lst *copy_env(char **envp);
+char *get_value_by_name(t_env_lst *list, char *name);
 void free_list(t_env_lst **list);
 void run_commands(char **command, t_env_lst *list);
 void new_process(char *process, char **argv);
 char **list_to_array(t_env_lst *list);
-void builtin_echo(char **argv);
+int builtin_echo(char **argv);
+int builtin_env(char **argv, t_env_lst *list);
 
 #endif

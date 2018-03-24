@@ -12,14 +12,9 @@
 
 #include "minishell.h"
 
-void choose_command(char **argv, t_env_lst *lst, char **ptr)
+void choose_command(char **argv, t_env_lst *lst)
 {
-	if (ft_strequ(*ptr, "exit"))
-	{
-		free_list(&lst);
-		ft_strdel(ptr);
-		exit(OK);
-	}
+	(void)lst;
 	if (ft_strequ(argv[0], "ls"))
 		new_process("/bin/ls", argv);
 	else if (ft_strequ(argv[0], "echo"))
@@ -30,8 +25,8 @@ void choose_command(char **argv, t_env_lst *lst, char **ptr)
 //		builtin_setenv(argv, lst);
 //	else if (ft_strequ(argv[0], "unsetenv"))
 //		builtin_unsetenv(argv, lst);
-//	else if (ft_strequ(argv[0], "env"))
-//		builtin_env(argv, lst);
+	else if (ft_strequ(argv[0], "env"))
+		builtin_env(argv, lst);
 	else
 		ft_printf("minishell: %s: command not found\n", argv[0]);
 	ft_free_tab((void**)argv);
@@ -56,7 +51,15 @@ void run_commands(char **command, t_env_lst *list)
 	{
 		if (!(argv = ft_split_whitespaces(commands[i])))
 			break ;
-		choose_command(argv, list, &ptr);
+		if (ft_strequ(ptr, "exit"))
+		{
+			ft_free_tab((void**)argv);
+			ft_free_tab((void**)commands);
+			free_list(&list);
+			ft_strdel(&ptr);
+			exit(OK);
+		}
+		choose_command(argv, list);
 		i++;
 	}
 	ft_free_tab((void**)commands);
