@@ -34,7 +34,7 @@ t_env_lst *copy_env(char **envp)
 	t_env_lst *head;
 
 	i = 0;
-	list = allocate_node();
+	list = new_node();
 	head = list;
 	while (envp[i])
 	{
@@ -43,9 +43,10 @@ t_env_lst *copy_env(char **envp)
 			break ;
 		list->name = ft_strsub(envp[i], 0, index);
 		list->value = ft_strsub(envp[i], index, ft_strlen(envp[i]) - index);
-		list->next = allocate_node();
+		if (!envp[++i])
+			break ;
+		list->next = new_node();
 		list = list->next;
-		i++;
 	}
 	return (head);
 }

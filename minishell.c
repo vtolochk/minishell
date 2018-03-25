@@ -30,7 +30,9 @@ void print_promt(t_env_lst *list)
 
 	pwd = get_value_by_name(list, "PWD");
 	pwd++;
+	write(0, "[", 1);
 	write(0, pwd, ft_strlen((pwd)));
+	write(0, "]", 1);
 	write(0, " $> ", 4);
 }
 

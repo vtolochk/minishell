@@ -1,45 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/23 19:58:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 19:58:00 by vtolochk         ###   ########.fr       */
+/*   Created: 2018/03/25 19:26:00 by vtolochk          #+#    #+#             */
+/*   Updated: 2018/03/25 19:26:00 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print(char *str)
-{
-	while (*str)
-	{
-		if (*str != '\'' && *str != '\"')
-			write(1, &(*str), 1);
-		str++;
-	}
-}
-
-int builtin_echo(char **argv)
+void remove_quotes(char **str)
 {
 	int i;
-	char new_line;
+	int j;
+	int quotes;
+	char *new_str;
 
-	i = 1;
-	new_line = 1;
-	if (ft_strequ(argv[i], "-n"))
+	i = 0;
+	j = 0;
+	quotes = 0;
+	if (!(*str))
+		return ;
+	while ((*str)[i])
+		if ((*str)[i++] == '\'' || (*str)[i] == '\"')
+			quotes++;
+	if (!quotes)
+		return ;
+	new_str = ft_strnew(ft_strlen(*str) - quotes);
+	i = 0;
+	while ((*str)[i])
 	{
-		new_line = 0;
+		if (((*str)[i] != '\'' && (*str)[i] != '\"'))
+			new_str[j++] = (*str)[i];
 		i++;
 	}
-	while (argv[i])
-	{
-		print(argv[i++]);
-		write(1, " ", 1);
-	}
-	if (new_line)
-		write(1, "\n", 1);
-	return (OK);
+	ft_strdel(str);
+	*str = new_str;
 }
