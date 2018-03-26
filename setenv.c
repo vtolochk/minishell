@@ -12,8 +12,11 @@
 
 #include "minishell.h"
 
-static t_env_lst *find_name(t_env_lst *lst, char *name)
+static t_env_lst *find_name(char *name)
 {
+	t_env_lst *lst;
+
+	lst = vars;
 	while (lst)
 	{
 		if (ft_strequ(name, lst->name))
@@ -26,12 +29,12 @@ static t_env_lst *find_name(t_env_lst *lst, char *name)
 	return (NULL);
 }
 
-static void change_list(t_env_lst **lst, char **argv, char **name)
+static void change_list(char **argv, char **name)
 {
 	t_env_lst   *new_var;
 	t_env_lst   *find;
 
-	find = find_name(*lst, *name);
+	find = find_name(*name);
 	if (find)
 	{
 		find->value = ft_strsub(argv[1], ft_strlen(*name), ft_strlen(argv[1]) - ft_strlen(*name));
@@ -42,11 +45,11 @@ static void change_list(t_env_lst **lst, char **argv, char **name)
 		new_var = new_node();
 		new_var->name = *name;
 		new_var->value = ft_strsub(argv[1], ft_strlen(*name), ft_strlen(argv[1]) - ft_strlen(*name));
-		list_push_back(lst, new_var);
+		list_push_back(new_var);
 	}
 }
 
-int bi_setenv(char **argv, t_env_lst **lst)
+int bi_setenv(char **argv)
 {
 	char        *sign;
 	char        *name;
@@ -70,7 +73,7 @@ int bi_setenv(char **argv, t_env_lst **lst)
 			ft_strdel(&name);
 			return (FAIL);
 		}
-		change_list(lst, argv, &name);
+		change_list(argv, &name);
 	}
 	return (OK);
 }

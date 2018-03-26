@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/24 20:16:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/24 20:16:00 by vtolochk         ###   ########.fr       */
+/*   Created: 2018/03/26 16:15:00 by vtolochk          #+#    #+#             */
+/*   Updated: 2018/03/26 16:15:00 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int bi_env(char **argv)
+int bi_pwd(void)
 {
-	if (!argv[1])
-		print_list();
-	else
-	{
-		write(2, "Usage: env\n", 12);
+	char *value;
+
+	value = get_value_by_name("PWD");
+	if (!value)
 		return (FAIL);
-	}
+	ft_printf("%s\n", ++value);
 	return (OK);
 }

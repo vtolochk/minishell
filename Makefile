@@ -6,7 +6,7 @@
 #    By: vtolochk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 20:20:18 by vtolochk          #+#    #+#              #
-#    Updated: 2018/03/25 21:04:40 by marvin           ###   ########.fr        #
+#    Updated: 2018/03/26 16:29:25 by vtolochk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ HEADER = includes/minishell.h
 #LIB_SRCS = libft/srcs/*.c
 
 SRCS = minishell.c run_commands.c copy_env.c list_functions.c \
-	   echo.c env.c setenv.c unsetenv.c remove_quotes.c count_sign.c
+	   echo.c env.c setenv.c unsetenv.c remove_quotes.c count_sign.c \
+	   pwd.c cd.c
 
 LIBFT = libft/libft.a
 

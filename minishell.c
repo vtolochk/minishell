@@ -24,11 +24,11 @@ void new_process(char *process, char **argv)
 	wait(&pid);
 }
 
-void print_promt(t_env_lst *list)
+void print_promt(void)
 {
 	char *pwd;
 
-	pwd = get_value_by_name(list, "PWD");
+	pwd = get_value_by_name("PWD");
 	pwd++;
 	write(0, "[", 1);
 	write(0, pwd, ft_strlen((pwd)));
@@ -39,19 +39,18 @@ void print_promt(t_env_lst *list)
 int     main(int argc, char **argv, char **envp)
 {
 	char *line;
-	t_env_lst *env_list;
 	(void)argc;
 	(void)argv;
 
-	env_list = copy_env(envp);
+	vars = copy_env(envp);
 	while (1)
 	{
-		print_promt(env_list);
+		print_promt();
 		get_next_line(0, &line);
 		if (!line)
 			write(1, "\n", 1);
 		else
-			run_commands(&line, env_list);
+			run_commands(&line);
 	}
 	return (OK);
 }

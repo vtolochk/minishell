@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int bi_unsetenv(char **argv, t_env_lst **head)
+int bi_unsetenv(char **argv)
 {
 	t_env_lst *list;
 
-	list = *head;
+	list = vars;
 	if (!(argv[1]) || argv[1][0] == '=' || argv[2])
 	{
 		write(2, "Usage: unsetenv [NAME]\n", 24);
@@ -43,7 +43,7 @@ int bi_unsetenv(char **argv, t_env_lst **head)
 			ft_printf("Can't find the variable %s.\n", argv[1]);
 			return (FAIL);
 		}
-		remove_node(head, argv[1]);
+		remove_node(argv[1]);
 	}
 	return (OK);
 }

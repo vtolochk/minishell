@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 #include "../libft/includes/libft.h"
+#include <sys/param.h>
+#include <errno.h>
 
 #define OK 0
 #define FAIL 1
@@ -25,21 +27,25 @@ typedef struct s_env_lst
 	struct s_env_lst	*next;
 }               t_env_lst;
 
-void print_list(t_env_lst *list);
+t_env_lst *vars;
+
+void print_list(void);
 t_env_lst *new_node(void);
 t_env_lst *copy_env(char **envp);
-void list_push_back(t_env_lst **head, t_env_lst *new_node);
-char *get_value_by_name(t_env_lst *list, char *name);
-void free_list(t_env_lst **list);
-void run_commands(char **command, t_env_lst *list);
+void list_push_back(t_env_lst *new_node);
+char *get_value_by_name(char *name);
+void free_list(void);
+void run_commands(char **command);
 void new_process(char *process, char **argv);
-char **list_to_array(t_env_lst *list);
-int remove_node(t_env_lst **head, char *name);
+char **list_to_array(void);
+int remove_node(char *name);
 void remove_quotes(char **str);
 int count_sign(char *str, char sign);
 int bi_echo(char **argv);
-int bi_env(char **argv, t_env_lst *list);
-int bi_setenv(char **argv, t_env_lst **lst);
-int bi_unsetenv(char **argv, t_env_lst **lst);
+int bi_pwd(void);
+int bi_env(char **argv);
+int bi_setenv(char **argv);
+int bi_unsetenv(char **argv);
+int bi_cd(char **argv);
 
 #endif

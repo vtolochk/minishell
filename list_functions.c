@@ -12,16 +12,16 @@
 
 #include "minishell.h"
 
-void free_list(t_env_lst **list)
+void free_list(void)
 {
 	t_env_lst *ptr;
 
-	while (*list)
+	while (vars)
 	{
-		ft_strdel(&((*list)->name));
-		ft_strdel(&((*list)->value));
-		ptr = (*list);
-		*list = (*list)->next;
+		ft_strdel(&(vars->name));
+		ft_strdel(&(vars->value));
+		ptr = vars;
+		vars = vars->next;
 		free(ptr);
 	}
 }
@@ -37,11 +37,13 @@ t_env_lst *new_node(void)
 	return (node);
 }
 
-char *get_value_by_name(t_env_lst *list, char *name)
+char *get_value_by_name(char *name)
 {
 	char *value;
+	t_env_lst *list;
 
 	value = NULL;
+	list = vars;
 	while (list)
 	{
 		if (ft_strequ(name, list->name))
@@ -51,12 +53,12 @@ char *get_value_by_name(t_env_lst *list, char *name)
 	return (value);
 }
 
-int remove_node(t_env_lst **head, char *name)
+int remove_node(char *name)
 {
 	t_env_lst *list;
 	t_env_lst *temp;
 
-	list = *head;
+	list = vars;
 	while (list->next)
 	{
 		if (ft_strequ(list->next->name, name))
@@ -73,27 +75,29 @@ int remove_node(t_env_lst **head, char *name)
 	return (OK);
 }
 
-char **list_to_array(t_env_lst *list)
+char **list_to_array(void)
 {
-	(void)list;
 	return (NULL);
 }
 
-void list_push_back(t_env_lst **head, t_env_lst *new_node)
+void list_push_back(t_env_lst *new_node)
 {
 	t_env_lst *list;
 
-	list = *head;
+	list = vars;
 	while (list->next)
 		list = list->next;
 	list->next = new_node;
 }
 
-void print_list(t_env_lst *head)
+void print_list(void)
 {
-	while (head)
+	t_env_lst *list;
+
+	list = vars;
+	while (list)
 	{
-		ft_printf("%s%s\n", head->name, head->value);
-		head = head->next;
+		ft_printf("%s%s\n", list->name, list->value);
+		list = list->next;
 	}
 }

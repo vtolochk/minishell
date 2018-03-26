@@ -12,19 +12,22 @@
 
 #include "minishell.h"
 
-void choose_command(char **argv, t_env_lst *lst)
+void choose_command(char **argv)
 {
-	(void)lst;
 	if (ft_strequ(argv[0], "echo"))
 		bi_echo(argv);
-//	else if (ft_strequ(argv[0], "cd"))
-//		bi_cd(argv);
+	else if (ft_strequ(argv[0], "cd"))
+		bi_cd(argv);
+	else if (ft_strequ(argv[0], "pwd"))
+		bi_pwd();
+	else if (ft_strequ(argv[0], "ls"))
+		new_process("/bin/ls", argv);
 	else if (ft_strequ(argv[0], "setenv"))
-		bi_setenv(argv, &lst);
+		bi_setenv(argv);
 	else if (ft_strequ(argv[0], "unsetenv"))
-		bi_unsetenv(argv, &lst);
+		bi_unsetenv(argv);
 	else if (ft_strequ(argv[0], "env"))
-		bi_env(argv, lst);
+		bi_env(argv);
 	else
 	{
 		if (ft_strequ(argv[0], "exit"))
@@ -35,7 +38,7 @@ void choose_command(char **argv, t_env_lst *lst)
 	ft_free_tab((void**)argv);
 }
 
-void run_commands(char **command, t_env_lst *list)
+void run_commands(char **command)
 {
 	int i;
 	char *ptr;
@@ -58,11 +61,11 @@ void run_commands(char **command, t_env_lst *list)
 		{
 			ft_free_tab((void**)argv);
 			ft_free_tab((void**)commands);
-			free_list(&list);
+			free_list();
 			ft_strdel(&ptr);
 			exit(OK);
 		}
-		choose_command(argv, list);
+		choose_command(argv);
 		i++;
 	}
 	ft_free_tab((void**)commands);

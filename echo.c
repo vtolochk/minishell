@@ -25,6 +25,8 @@ void print(char *str)
 int bi_echo(char **argv)
 {
 	int i;
+	char *find;
+	char *value;
 	char new_line;
 
 	i = 1;
@@ -36,6 +38,18 @@ int bi_echo(char **argv)
 	}
 	while (argv[i])
 	{
+		find = ft_strchr(argv[i], '$');
+		if (find)
+		{
+			value = get_value_by_name(++find);
+			if (value)
+			{
+				print(++value);
+				write(1, " ", 1);
+			}
+			i++;
+			continue ;
+		}
 		print(argv[i++]);
 		write(1, " ", 1);
 	}
