@@ -16,7 +16,7 @@ static t_env_lst *find_name(char *name)
 {
 	t_env_lst *lst;
 
-	lst = vars;
+	lst = g_vars;
 	while (lst)
 	{
 		if (ft_strequ(name, lst->name))

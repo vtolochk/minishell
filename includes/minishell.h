@@ -15,7 +15,7 @@
 
 #include "../libft/includes/libft.h"
 #include <sys/param.h>
-#include <errno.h>
+#include <dirent.h>
 
 #define OK 0
 #define FAIL 1
@@ -27,17 +27,20 @@ typedef struct s_env_lst
 	struct s_env_lst	*next;
 }               t_env_lst;
 
-t_env_lst *vars;
+t_env_lst *g_vars;
 
 void print_list(void);
 t_env_lst *new_node(void);
 t_env_lst *copy_env(char **envp);
 void list_push_back(t_env_lst *new_node);
 char *get_value_by_name(char *name);
+int find_a_file(DIR *ptr, char *name);
+int execute_files(char **argv);
 void free_list(void);
 void run_commands(char **command);
 void new_process(char *process, char **argv);
 char **list_to_array(void);
+int list_len(t_env_lst *lst);
 int remove_node(char *name);
 void remove_quotes(char **str);
 int count_sign(char *str, char sign);

@@ -15,13 +15,18 @@
 void new_process(char *process, char **argv)
 {
 	pid_t pid;
+	char **env_vars;
+
+	env_vars = list_to_array();
 	pid = fork();
 	if (pid == 0)
 	{
-		execv(process, argv);
+		execve(process, argv, env_vars);
+		ft_free_tab((void **)env_vars);
 		exit(0);
 	}
 	wait(&pid);
+	ft_free_tab((void **)env_vars);
 }
 
 void print_promt(void)
@@ -42,7 +47,7 @@ int     main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
-	vars = copy_env(envp);
+	g_vars = copy_env(envp);
 	while (1)
 	{
 		print_promt();

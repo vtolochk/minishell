@@ -16,7 +16,7 @@ int bi_unsetenv(char **argv)
 {
 	t_env_lst *list;
 
-	list = vars;
+	list = g_vars;
 	if (!(argv[1]) || argv[1][0] == '=' || argv[2])
 	{
 		write(2, "Usage: unsetenv [NAME]\n", 24);

@@ -20,8 +20,6 @@ void choose_command(char **argv)
 		bi_cd(argv);
 	else if (ft_strequ(argv[0], "pwd"))
 		bi_pwd();
-	else if (ft_strequ(argv[0], "ls"))
-		new_process("/bin/ls", argv);
 	else if (ft_strequ(argv[0], "setenv"))
 		bi_setenv(argv);
 	else if (ft_strequ(argv[0], "unsetenv"))
@@ -31,9 +29,12 @@ void choose_command(char **argv)
 	else
 	{
 		if (ft_strequ(argv[0], "exit"))
-			ft_printf("minishell: %s: command not found\n", argv[1]);
+			ft_printf("Usage: exit\n");
 		else
-			ft_printf("minishell: %s: command not found\n", argv[0]);
+		{
+			if (execute_files(argv) == FAIL)
+				ft_printf("minishell: %s: command not found\n", argv[0]);
+		}
 	}
 	ft_free_tab((void**)argv);
 }

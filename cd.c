@@ -16,7 +16,7 @@ void change_node_value(char *name, char *new_value)
 {
 	t_env_lst *list;
 
-	list = vars;
+	list = g_vars;
 	while (list)
 	{
 		if (ft_strequ(list->name, name))
@@ -27,6 +27,11 @@ void change_node_value(char *name, char *new_value)
 		}
 		list = list->next;
 	}
+}
+
+int check_perm_and_existence(void)
+{
+	return (OK);
 }
 
 int bi_cd(char **argv)
@@ -46,7 +51,12 @@ int bi_cd(char **argv)
 		chdir(++old_pwd);
 	}
 	else
-		chdir(argv[1]);
+	{
+		if (check_perm_and_existence() == OK)
+			chdir(argv[1]);
+		else
+			return (FAIL);
+	}
 	getcwd(buf, MAXPATHLEN);
 	change_node_value("OLDPWD", ft_strdup(get_value_by_name("PWD")));
 	change_node_value("PWD", ft_strjoin("=", buf));
