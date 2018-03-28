@@ -34,7 +34,7 @@ t_env_lst *new_node(void);
 t_env_lst *copy_env(char **envp);
 void list_push_back(t_env_lst *new_node);
 char *get_value_by_name(char *name);
-int find_a_file(DIR *ptr, char *name);
+char *find_a_file(char *dir, char *name);
 int execute_files(char **argv);
 void free_list(void);
 void run_commands(char **command);

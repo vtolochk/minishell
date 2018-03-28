@@ -12,16 +12,68 @@
 
 #include "minishell.h"
 
-int find_a_file(DIR *ptr, char *name)
+int check_dir(DIR *dir_ptr, char *name)
 {
 	struct dirent *dir_info;
 
-	while ((dir_info = readdir(ptr)))
+	while ((dir_info = readdir(dir_ptr)))
 	{
 		if (ft_strequ(dir_info->d_name, name))
+		{
+			closedir(dir_ptr);
 			return (OK);
+		}
 	}
+	closedir(dir_ptr);
 	return (FAIL);
+}
+
+char *create_full_path(char *dir, char *name)
+{
+	char *temp;
+	char *full_path;
+
+	full_path = ft_strjoin(dir, "/");
+	temp = full_path;
+	full_path = ft_strjoin(full_path, name);
+	ft_strdel(&temp);
+	return (full_path);
+}
+
+char *find_a_file(char *dir, char *name)
+{
+	int i;
+	char *path;
+	char **path_names;
+	char *full_path;
+	DIR *dir_ptr;
+
+	i = 0;
+	dir_ptr = opendir(dir);
+	if (check_dir(dir_ptr, name) == OK)
+		return (create_full_path(dir, name));
+	else
+	{
+		path = get_value_by_name("PATH");
+		if (!path)
+			return (NULL);
+		path_names = ft_strsplit(++path, ':');
+		if (!path_names)
+			return (NULL);
+		while (path_names[i])
+		{
+			dir_ptr = opendir(path_names[i]);
+			if (check_dir(dir_ptr, name) == OK)
+			{
+				full_path = create_full_path(path_names[i], name);
+				ft_free_tab((void **)path_names);
+				return (full_path);
+			}
+			i++;
+		}
+	}
+	ft_free_tab((void **)path_names);
+	return (NULL);
 }
 
 void get_dir_and_file(char **argv, char **dir, char **file)
@@ -47,33 +99,22 @@ int execute_files(char **argv)
 	int ret;
 	char *dir;
 	char *file;
-	DIR *dir_ptr;
+	char *full_path;
 
 	ret = FAIL;
 	get_dir_and_file(argv, &dir, &file);
-	dir_ptr = opendir(dir);
-	if (dir_ptr)
+	if ((full_path = find_a_file(dir, file)))
 	{
-		if (find_a_file(dir_ptr, file) == OK)
-		{
-			if (ft_strequ(argv[0], file))
-				ret = FAIL;
-			else if (access(argv[0], X_OK) == -1)
-			{
-				ft_printf("minishell: permission denied: %s\n", file);
-				ret = OK;
-			}
-			else
-			{
-				new_process(argv[0], argv);
-				ret = OK;
-			}
-		}
-		else if (ft_strchr(argv[0], '/'))
-		{
-			ft_printf("minishell: no such file or directory: %s\n", file);
-			ret = OK;
-		}
+		if (access(full_path, X_OK) == -1)
+			ft_printf("minishell: permission denied: %s\n", file);
+		else
+			new_process(full_path, argv);
+		ret = OK;
+	}
+	else if (ft_strchr(argv[0], '/'))
+	{
+		ft_printf("minishell: no such file or directory: %s\n", file);
+		ret = OK;
 	}
 	ft_strdel(&dir);
 	ft_strdel(&file);

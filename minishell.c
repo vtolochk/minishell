@@ -32,13 +32,11 @@ void new_process(char *process, char **argv)
 void print_promt(void)
 {
 	char *pwd;
+	char *log_name;
 
 	pwd = get_value_by_name("PWD");
-	pwd++;
-	write(0, "[", 1);
-	write(0, pwd, ft_strlen((pwd)));
-	write(0, "]", 1);
-	write(0, " $> ", 4);
+	log_name = get_value_by_name("LOGNAME");
+	ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, ++pwd);
 }
 
 int     main(int argc, char **argv, char **envp)

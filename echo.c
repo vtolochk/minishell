@@ -55,5 +55,10 @@ int bi_echo(char **argv)
 	}
 	if (new_line)
 		write(1, "\n", 1);
+	else
+	{
+		write(1, "\e[7m", 5);
+		write(1, "%", 1);
+	}
 	return (OK);
 }
