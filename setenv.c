@@ -54,7 +54,6 @@ int bi_setenv(char **argv)
 	char        *sign;
 	char        *name;
 
-
 	if (!(argv[1]) || !(ft_strchr(argv[1], '=')) || argv[1][0] == '=' || argv[2] || count_sign(argv[1], '=') > 1)
 	{
 		write(2, "Usage: setenv [NAME]=[VALUE]\n", 31);
@@ -66,10 +65,9 @@ int bi_setenv(char **argv)
 		sign = ft_strchr(argv[1], '=');
 		name = ft_strsub(argv[1], 0, sign - argv[1]);
 		if (ft_strequ(name, "PWD") || ft_strequ(name, "HOME") || ft_strequ(name, "OLDPWD") ||
-			ft_strequ(name, "LANG") || ft_strequ(name, "SHELL") || ft_strequ(name, "USER") ||
-			ft_strequ(name, "LOGNAME") || ft_strequ(name, "SHLVL"))
+			ft_strequ(name, "LANG") || ft_strequ(name, "SHLVL"))
 		{
-			write(2, "The following variables cannot be changed: LANG, PWD, SHELL, USER, LOGNAME, SHLVL, OLDPWD.\n", 94);
+			ft_printf("The following variables cannot be changed: LANG, PWD, SHLVL, OLDPWD.\n");
 			ft_strdel(&name);
 			return (FAIL);
 		}

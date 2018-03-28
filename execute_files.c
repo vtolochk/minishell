@@ -49,28 +49,29 @@ char *find_a_file(char *dir, char *name)
 	DIR *dir_ptr;
 
 	i = 0;
-	dir_ptr = opendir(dir);
-	if (check_dir(dir_ptr, name) == OK)
-		return (create_full_path(dir, name));
-	else
+	if (dir)
 	{
-		path = get_value_by_name("PATH");
-		if (!path)
+		if (!(dir_ptr = opendir(dir)))
 			return (NULL);
-		path_names = ft_strsplit(++path, ':');
-		if (!path_names)
+		if ((check_dir(dir_ptr, name) == OK))
+			return (create_full_path(dir, name));
+		else
 			return (NULL);
-		while (path_names[i])
+	}
+	if (!(path = get_value_by_name("PATH")))
+		return (NULL);
+	if (!(path_names = ft_strsplit(++path, ':')))
+		return (NULL);
+	while (path_names[i])
+	{
+		dir_ptr = opendir(path_names[i]);
+		if (check_dir(dir_ptr, name) == OK)
 		{
-			dir_ptr = opendir(path_names[i]);
-			if (check_dir(dir_ptr, name) == OK)
-			{
-				full_path = create_full_path(path_names[i], name);
-				ft_free_tab((void **)path_names);
-				return (full_path);
-			}
-			i++;
+			full_path = create_full_path(path_names[i], name);
+			ft_free_tab((void **)path_names);
+			return (full_path);
 		}
+		i++;
 	}
 	ft_free_tab((void **)path_names);
 	return (NULL);
@@ -88,8 +89,7 @@ void get_dir_and_file(char **argv, char **dir, char **file)
 	}
 	else
 	{
-		*dir = get_value_by_name("PWD");
-		*dir = ft_strdup(++(*dir));
+		*dir = NULL;
 		*file = ft_strdup(argv[0]);
 	}
 }

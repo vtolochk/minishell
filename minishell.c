@@ -22,10 +22,12 @@ void new_process(char *process, char **argv)
 	if (pid == 0)
 	{
 		execve(process, argv, env_vars);
+		ft_strdel(&process);
 		ft_free_tab((void **)env_vars);
 		exit(0);
 	}
 	wait(&pid);
+	ft_strdel(&process);
 	ft_free_tab((void **)env_vars);
 }
 

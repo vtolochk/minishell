@@ -29,8 +29,30 @@ void change_node_value(char *name, char *new_value)
 	}
 }
 
-int check_perm_and_existence(void)
+int check_perm_and_existence(char **argv)
 {
+	struct stat buf;
+
+	if (argv[1]  && argv[2])
+	{
+		ft_printf("cd: too many arguments\n");
+		return (FAIL);
+	}
+	else if (lstat(argv[1], &buf) == -1)
+	{
+		ft_printf("cd: no such file or directory: %s\n", argv[1]);
+		return (FAIL);
+	}
+	else if (!(buf.st_mode & S_IXUSR))
+	{
+		ft_printf("cd: permission denied: %s\n", argv[1]);
+		return (FAIL);
+	}
+	else if (S_ISREG(buf.st_mode))
+	{
+		ft_printf("cd: not a directory: %s\n", argv[1]);
+		return (FAIL);
+	}
 	return (OK);
 }
 
@@ -45,14 +67,14 @@ int bi_cd(char **argv)
 		home = get_value_by_name("HOME");
 		chdir(++home);
 	}
-	else if (ft_strequ(argv[1], "-"))
+	else if (ft_strequ(argv[1], "-") && !argv[2])
 	{
 		old_pwd = get_value_by_name("OLDPWD");
 		chdir(++old_pwd);
 	}
 	else
 	{
-		if (check_perm_and_existence() == OK)
+		if (check_perm_and_existence(argv) == OK)
 			chdir(argv[1]);
 		else
 			return (FAIL);
