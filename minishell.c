@@ -34,11 +34,21 @@ void new_process(char *process, char **argv)
 void print_promt(void)
 {
 	char *pwd;
+	char *find;
+	char *home;
 	char *log_name;
 
 	pwd = get_value_by_name("PWD");
+	home = get_value_by_name("HOME");
 	log_name = get_value_by_name("LOGNAME");
-	ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, ++pwd);
+	if ((find = ft_strstr(++pwd, ++home)))
+	{
+		pwd = ft_strjoin("~", find + ft_strlen(home));
+		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, pwd);
+		ft_strdel(&pwd);
+	}
+	else
+		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, pwd);
 }
 
 int     main(int argc, char **argv, char **envp)

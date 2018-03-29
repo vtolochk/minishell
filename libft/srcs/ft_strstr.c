@@ -14,6 +14,8 @@
 
 char	*ft_strstr(const char *big, const char *little)
 {
+	if (!big || !little)
+		return (NULL);
 	if (*little == '\0')
 		return ((char *)big);
 	while (*big != '\0')
