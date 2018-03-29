@@ -12,22 +12,57 @@
 
 #include "minishell.h"
 
+char **remove_tild(char **argv)
+{
+	int i;
+	int j;
+	char **new;
+	char *find;
+	char *temp;
+
+	j = 0;
+	i = array_len(argv);
+	new = new_array(i);
+	while (i-- > 0)
+	{
+		new[j] = ft_strdup(argv[j]);
+		j++;
+	}
+	i = 0;
+	while (new[i])
+	{
+		find = ft_strchr(new[i], '~');
+		if (find)
+		{
+			temp = get_value_by_name("HOME");
+			new[i] = ft_strjoin(++temp, ++find);
+		}
+		i++;
+	}
+	return (new);
+}
+
 void new_process(char *process, char **argv)
 {
+	char **new_argv;
 	pid_t pid;
 	char **env_vars;
 
 	env_vars = list_to_array();
 	pid = fork();
+	new_argv = remove_tild(argv);
 	if (pid == 0)
 	{
-		execve(process, argv, env_vars);
+		execve(process, new_argv, env_vars);
 		ft_strdel(&process);
 		ft_free_tab((void **)env_vars);
+		ft_free_tab((void **)new_argv);
+		free_list();
 		exit(0);
 	}
 	wait(&pid);
 	ft_strdel(&process);
+	ft_free_tab((void **)new_argv);
 	ft_free_tab((void **)env_vars);
 }
 

@@ -26,6 +26,23 @@ void free_list(void)
 	}
 }
 
+void change_node_value(char *name, char *new_value)
+{
+	t_env_lst *list;
+
+	list = g_vars;
+	while (list)
+	{
+		if (ft_strequ(list->name, name))
+		{
+			ft_strdel(&(list->value));
+			list->value = new_value;
+			break ;
+		}
+		list = list->next;
+	}
+}
+
 int list_len(t_env_lst *lst)
 {
 	int len;

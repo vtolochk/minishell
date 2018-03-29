@@ -12,23 +12,6 @@
 
 #include "minishell.h"
 
-static void change_node_value(char *name, char *new_value)
-{
-	t_env_lst *list;
-
-	list = g_vars;
-	while (list)
-	{
-		if (ft_strequ(list->name, name))
-		{
-			ft_strdel(&(list->value));
-			list->value = new_value;
-			break ;
-		}
-		list = list->next;
-	}
-}
-
 static int check_perm_and_existence(char **argv, char *tild_subst)
 {
 	struct stat buf;
@@ -64,7 +47,10 @@ static char *substitute_tild(char *path)
 
 	home = get_value_by_name("HOME");
 	find = ft_strchr(path, '~');
-	new_path = ft_strjoin(++home, ++find);
+	find++;
+	if (!(*find))
+		return (NULL);
+	new_path = ft_strjoin(++home, find);
 	return (new_path);
 }
 

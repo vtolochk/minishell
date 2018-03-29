@@ -1,45 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*   new_array.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/25 19:26:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/25 19:26:00 by vtolochk         ###   ########.fr       */
+/*   Created: 2018/03/29 18:39:00 by vtolochk          #+#    #+#             */
+/*   Updated: 2018/03/29 18:39:00 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void remove_quotes(char **str)
+char **new_array(int size)
 {
 	int i;
-	int j;
-	int quotes;
-	char *new_str;
+	char **array;
 
 	i = 0;
-	j = 0;
-	quotes = 0;
-	if (!(*str))
-		return ;
-	while ((*str)[i])
-	{
-		if ((*str)[i] == 34 || (*str)[i] == 39)
-			quotes++;
-		i++;
-	}
-	if (!quotes)
-		return ;
-	new_str = ft_strnew((ft_strlen(*str) - quotes) + 1);
-	i = 0;
-	while ((*str)[i])
-	{
-		if (((*str)[i] != '\'' && (*str)[i] != '\"'))
-			new_str[j++] = (*str)[i];
-		i++;
-	}
-	ft_strdel(str);
-	*str = new_str;
+	if (size <= 0)
+		return (NULL);
+	if (!(array = (char **)malloc(sizeof(char *) * (size + 1))))
+		return (NULL);
+	while (i <= size)
+		array[i++] = NULL;
+	return (array);
 }

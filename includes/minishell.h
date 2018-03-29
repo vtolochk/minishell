@@ -30,7 +30,10 @@ typedef struct s_env_lst
 
 t_env_lst *g_vars;
 
+char **new_array(int size);
+int array_len(char **array);
 void print_list(void);
+void change_node_value(char *name, char *new_value);
 t_env_lst *new_node(void);
 t_env_lst *copy_env(char **envp);
 void list_push_back(t_env_lst *new_node);

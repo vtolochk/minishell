@@ -16,15 +16,18 @@ int check_dir(DIR *dir_ptr, char *name)
 {
 	struct dirent *dir_info;
 
-	while ((dir_info = readdir(dir_ptr)))
+	if (dir_ptr)
 	{
-		if (ft_strequ(dir_info->d_name, name))
+		while ((dir_info = readdir(dir_ptr)))
 		{
-			closedir(dir_ptr);
-			return (OK);
+			if (ft_strequ(dir_info->d_name, name))
+			{
+				closedir(dir_ptr);
+				return (OK);
+			}
 		}
+		closedir(dir_ptr);
 	}
-	closedir(dir_ptr);
 	return (FAIL);
 }
 

@@ -12,21 +12,38 @@
 
 #include "minishell.h"
 
-void print(char *str)
+static void echo_print(char *str)
 {
-	while (*str)
+	char *temp;
+	char *value;
+	char *without_quotes;
+
+	without_quotes = ft_strdup(str);
+	remove_quotes(&without_quotes);
+	temp = without_quotes;
+	while (*without_quotes)
 	{
-		if (*str != '\'' && *str != '\"')
-			write(1, &(*str), 1);
-		str++;
+		if (*without_quotes == '$')
+		{
+			without_quotes++;
+			if ((value = get_value_by_name(without_quotes)))
+			{
+				ft_printf("%s", ++value);
+				ft_strdel(&temp);
+				return ;
+			}
+			else
+				without_quotes--;
+		}
+		write(1, without_quotes, 1);
+		without_quotes++;
 	}
+	ft_strdel(&temp);
 }
 
 int bi_echo(char **argv)
 {
 	int i;
-	char *find;
-	char *value;
 	char new_line;
 
 	i = 1;
@@ -38,20 +55,10 @@ int bi_echo(char **argv)
 	}
 	while (argv[i])
 	{
-		find = ft_strchr(argv[i], '$');
-		if (find)
-		{
-			value = get_value_by_name(++find);
-			if (value)
-			{
-				print(++value);
-				write(1, " ", 1);
-			}
-			i++;
-			continue ;
-		}
-		print(argv[i++]);
-		write(1, " ", 1);
+		echo_print(argv[i]);
+		if (argv[i + 1])
+			write(1, " ", 1);
+		i++;
 	}
 	if (new_line)
 		write(1, "\n", 1);
