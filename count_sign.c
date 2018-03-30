@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/25 21:02:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/25 21:02:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:28:35 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int count_sign(char *str, char sign)
+int		count_sign(char *str, char sign)
 {
 	int sum;
 

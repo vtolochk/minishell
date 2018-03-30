@@ -6,19 +6,17 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 15:59:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/30 15:59:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:17:30 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void tild_helper(char **argv, char **new)
+static void		tild_helper(char **argv, char **new, int i)
 {
-	int i;
-	int j;
-	char *find;
+	int		j;
+	char	*find;
 
-	i = 0;
 	j = 0;
 	while (new[i])
 	{
@@ -30,7 +28,9 @@ static void tild_helper(char **argv, char **new)
 				find = ft_strchr(argv[j], '$');
 				if (find)
 				{
+					find = new[i];
 					new[i] = remove_dollar(argv[j]);
+					ft_strdel(&find);
 					break ;
 				}
 				j++;
@@ -40,12 +40,11 @@ static void tild_helper(char **argv, char **new)
 	}
 }
 
-char **remove_tild(char **argv, int j)
+char			**remove_tild(char **argv, int j, int i)
 {
-	int i;
 	char **new;
 	char *find;
-	char *temp;
+	char *temp[2];
 
 	i = array_len(argv);
 	new = new_array(i);
@@ -54,17 +53,18 @@ char **remove_tild(char **argv, int j)
 		new[j] = ft_strdup(argv[j]);
 		j++;
 	}
-	i = 0;
-	while (new[i])
+	i = -1;
+	while (new[++i])
 	{
 		find = ft_strchr(new[i], '~');
 		if (find)
 		{
-			temp = get_value_by_name("HOME");
-			new[i] = ft_strjoin(++temp, ++find);
+			temp[0] = get_value_by_name("HOME");
+			temp[1] = new[i];
+			new[i] = ft_strjoin(++(temp[0]), ++find);
+			ft_strdel(&(temp[1]));
 		}
-		i++;
 	}
-	tild_helper(argv, new);
+	tild_helper(argv, new, 0);
 	return (new);
 }

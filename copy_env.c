@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 12:39:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 12:39:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:29:33 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int get_index(char *str, char c)
+static int		get_index(char *str, char c)
 {
 	int i;
 
@@ -26,12 +26,12 @@ static int get_index(char *str, char c)
 	return (i);
 }
 
-t_env_lst *copy_env(char **envp)
+t_env_lst		*copy_env(char **envp)
 {
-	int i;
-	int index;
-	t_env_lst *list;
-	t_env_lst *head;
+	int			i;
+	int			index;
+	t_env_lst	*list;
+	t_env_lst	*head;
 
 	i = 0;
 	list = new_node();

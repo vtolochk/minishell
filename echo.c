@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 19:58:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 19:58:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:28:13 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void echo_print(char *str)
+static void		echo_print(char *str)
 {
 	char *temp;
 	char *value;
@@ -41,10 +41,10 @@ static void echo_print(char *str)
 	ft_strdel(&temp);
 }
 
-int bi_echo(char **argv)
+int				bi_echo(char **argv)
 {
-	int i;
-	char new_line;
+	int		i;
+	char	new_line;
 
 	i = 1;
 	new_line = 1;

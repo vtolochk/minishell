@@ -6,37 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 20:22:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 11:14:32 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:23:16 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void new_process(char *process, char **argv)
-{
-	char **new_argv;
-	pid_t pid;
-	char **env_vars;
-
-	env_vars = list_to_array();
-	pid = fork();
-	new_argv = remove_tild(argv, 0);
-	if (pid == 0)
-	{
-		execve(process, new_argv, env_vars);
-		ft_strdel(&process);
-		ft_free_tab((void **)env_vars);
-		ft_free_tab((void **)new_argv);
-		free_list();
-		exit(0);
-	}
-	wait(&pid);
-	ft_strdel(&process);
-	ft_free_tab((void **)new_argv);
-	ft_free_tab((void **)env_vars);
-}
-
-void print_promt(void)
+static void		print_prompt(void)
 {
 	char *pwd;
 	char *find;
@@ -60,16 +36,24 @@ void print_promt(void)
 	}
 }
 
-int     main(int argc, char **argv, char **envp)
+static void		print_signal(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	print_prompt();
+}
+
+int				main(int argc, char **argv, char **envp)
 {
 	char *line;
+
 	(void)argc;
 	(void)argv;
-
 	g_vars = copy_env(envp);
 	while (1)
 	{
-		print_promt();
+		signal(SIGINT, print_signal);
+		print_prompt();
 		get_next_line(0, &line);
 		if (!line)
 			write(1, "\n", 1);

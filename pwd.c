@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 16:15:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/26 16:15:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:21:20 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int bi_pwd(void)
+int		bi_pwd(void)
 {
 	char *value;
 

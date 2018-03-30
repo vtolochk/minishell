@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 15:47:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/23 15:47:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:47:33 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int words_num(char *str)
+int		words_num(char *str)
 {
 	int words;
 
@@ -32,16 +32,16 @@ int words_num(char *str)
 	return (words);
 }
 
-int fill_array(char **array, char *str, int words)
+int		fill_array(char **array, char *str, int words)
 {
-	int i;
-	char *ptr;
+	int		i;
+	char	*ptr;
 
 	i = 0;
 	while (words-- > 0)
 	{
 		while (*str && WHITESPACE)
-				str++;
+			str++;
 		ptr = str;
 		while (*str && !(WHITESPACE))
 			str++;
@@ -51,10 +51,10 @@ int fill_array(char **array, char *str, int words)
 	return (0);
 }
 
-char **ft_split_whitespaces(char *str)
+char	**ft_split_whitespaces(char *str)
 {
-	int words;
-	char **array;
+	int		words;
+	char	**array;
 
 	if (!str)
 		return (NULL);

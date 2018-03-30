@@ -6,7 +6,7 @@
 /*   By: vtolochk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 16:26:02 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/08 14:06:34 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:47:53 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void			*ft_free_tab(void **tab);
 void			ft_strtolower(char **str);
 char			*ft_itoa_base(size_t value, size_t base);
 int				ft_printf(const char *format, ...);
-char            **ft_split_whitespaces(char *str);
+char			**ft_split_whitespaces(char *str);
 
 #endif

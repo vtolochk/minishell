@@ -6,13 +6,13 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 16:22:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/26 16:22:00 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/30 21:34:24 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int check_perm_and_existence(char **argv, char *tild_subst)
+static int		check_perm_and_existence(char **argv, char *tild_sub)
 {
 	struct stat buf;
 
@@ -21,25 +21,27 @@ static int check_perm_and_existence(char **argv, char *tild_subst)
 		ft_printf("cd: too many arguments\n");
 		return (FAIL);
 	}
-	else if (lstat(tild_subst ? tild_subst : argv[1], &buf) == -1)
+	else if (lstat(tild_sub ? tild_sub : argv[1], &buf) == -1)
 	{
-		ft_printf("cd: no such file or directory: %s\n", tild_subst ? tild_subst : argv[1]);
+		ft_printf("cd: no such file or directory: \
+		%s\n", tild_sub ? tild_sub : argv[1]);
 		return (FAIL);
 	}
 	else if (!(buf.st_mode & S_IXUSR))
 	{
-		ft_printf("cd: permission denied: %s\n", tild_subst ? tild_subst : argv[1]);
+		ft_printf("cd: permission denied: \
+		%s\n", tild_sub ? tild_sub : argv[1]);
 		return (FAIL);
 	}
 	else if (S_ISREG(buf.st_mode))
 	{
-		ft_printf("cd: not a directory: %s\n", tild_subst ? tild_subst : argv[1]);
+		ft_printf("cd: not a directory: %s\n", tild_sub ? tild_sub : argv[1]);
 		return (FAIL);
 	}
 	return (OK);
 }
 
-static char *substitute_tild(char *path)
+static char		*substitute_tild(char *path)
 {
 	char *find;
 	char *home;
@@ -54,7 +56,7 @@ static char *substitute_tild(char *path)
 	return (new_path);
 }
 
-static int regular_case(char **argv)
+static int		regular_case(char **argv)
 {
 	char *new_path;
 
@@ -80,11 +82,11 @@ static int regular_case(char **argv)
 	return (OK);
 }
 
-int bi_cd(char **argv)
+int				bi_cd(char **argv)
 {
-	char *home;
-	char *old_pwd;
-	char buf[MAXPATHLEN];
+	char		*home;
+	char		*old_pwd;
+	char		buf[MAXPATHLEN];
 
 	if (!argv[1] || (ft_strequ(argv[1], "~") && !argv[2]))
 	{
@@ -99,9 +101,8 @@ int bi_cd(char **argv)
 		else
 			return (FAIL);
 	}
-	else
-		if (regular_case(argv) == FAIL)
-			return (FAIL);
+	else if (regular_case(argv) == FAIL)
+		return (FAIL);
 	getcwd(buf, MAXPATHLEN);
 	change_node_value("OLDPWD", ft_strdup(get_value_by_name("PWD")));
 	change_node_value("PWD", ft_strjoin("=", buf));
