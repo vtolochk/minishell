@@ -43,27 +43,24 @@ char *create_full_path(char *dir, char *name)
 	return (full_path);
 }
 
-char *find_a_file(char *dir, char *name)
+char *find_a_file(char *dir, char *name, int i)
 {
-	int i;
 	char *path;
 	char **path_names;
 	char *full_path;
 	DIR *dir_ptr;
 
-	i = 0;
 	if (dir)
 	{
 		if (!(dir_ptr = opendir(dir)))
 			return (NULL);
-		if ((check_dir(dir_ptr, name) == OK))
-			return (create_full_path(dir, name));
-		else
-			return (NULL);
+//		if ((check_dir(dir_ptr, name) == OK))
+//			return (create_full_path(dir, name));
+//		else
+//			return (NULL);
+		return (check_dir(dir_ptr, name) == OK ? create_full_path(dir, name) : NULL);
 	}
-	if (!(path = get_value_by_name("PATH")))
-		return (NULL);
-	if (!(path_names = ft_strsplit(++path, ':')))
+	if (!(path = get_value_by_name("PATH")) || !(path_names = ft_strsplit(++path, ':')))
 		return (NULL);
 	while (path_names[i])
 	{
@@ -106,7 +103,7 @@ int execute_files(char **argv)
 
 	ret = FAIL;
 	get_dir_and_file(argv, &dir, &file);
-	if ((full_path = find_a_file(dir, file)))
+	if ((full_path = find_a_file(dir, file, 0)))
 	{
 		if (access(full_path, X_OK) == -1)
 			ft_printf("minishell: permission denied: %s\n", file);

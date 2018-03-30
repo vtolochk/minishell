@@ -12,36 +12,6 @@
 
 #include "minishell.h"
 
-char **remove_tild(char **argv)
-{
-	int i;
-	int j;
-	char **new;
-	char *find;
-	char *temp;
-
-	j = 0;
-	i = array_len(argv);
-	new = new_array(i);
-	while (i-- > 0)
-	{
-		new[j] = ft_strdup(argv[j]);
-		j++;
-	}
-	i = 0;
-	while (new[i])
-	{
-		find = ft_strchr(new[i], '~');
-		if (find)
-		{
-			temp = get_value_by_name("HOME");
-			new[i] = ft_strjoin(++temp, ++find);
-		}
-		i++;
-	}
-	return (new);
-}
-
 void new_process(char *process, char **argv)
 {
 	char **new_argv;
@@ -50,7 +20,7 @@ void new_process(char *process, char **argv)
 
 	env_vars = list_to_array();
 	pid = fork();
-	new_argv = remove_tild(argv);
+	new_argv = remove_tild(argv, 0);
 	if (pid == 0)
 	{
 		execve(process, new_argv, env_vars);
@@ -79,11 +49,15 @@ void print_promt(void)
 	if ((find = ft_strstr(++pwd, ++home)))
 	{
 		pwd = ft_strjoin("~", find + ft_strlen(home));
-		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, pwd);
+		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%\n", ++log_name, pwd);
+		write(0, "$> ", 3);
 		ft_strdel(&pwd);
 	}
 	else
-		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%%yellow%$>%eoc%\n", ++log_name, pwd);
+	{
+		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%\n", ++log_name, pwd);
+		write(0, "$> ", 3);
+	}
 }
 
 int     main(int argc, char **argv, char **envp)
@@ -100,7 +74,7 @@ int     main(int argc, char **argv, char **envp)
 		if (!line)
 			write(1, "\n", 1);
 		else
-			run_commands(&line);
+			run_commands(&line, 0, 0);
 	}
 	return (OK);
 }

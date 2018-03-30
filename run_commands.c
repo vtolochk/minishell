@@ -39,14 +39,11 @@ void choose_command(char **argv)
 	ft_free_tab((void**)argv);
 }
 
-void run_commands(char **command)
+void run_commands(char **command, int i, char *ptr)
 {
-	int i;
-	char *ptr;
 	char **argv;
 	char **commands;
 
-	i = 0;
 	ptr = ft_strtrim(*command);
 	ft_strdel(command);
 	if (!ptr[0] || !(commands = ft_strsplit(ptr, ';')))
@@ -56,7 +53,7 @@ void run_commands(char **command)
 	}
 	while (commands[i])
 	{
-		if (!(argv = ft_split_whitespaces(commands[i])))
+		if (!(argv = ft_split_whitespaces(commands[i++])))
 			break ;
 		if (ft_strequ(ptr, "exit"))
 		{
@@ -67,7 +64,6 @@ void run_commands(char **command)
 			exit(OK);
 		}
 		choose_command(argv);
-		i++;
 	}
 	ft_free_tab((void**)commands);
 	ft_strdel(&ptr);

@@ -30,6 +30,9 @@ typedef struct s_env_lst
 
 t_env_lst *g_vars;
 
+void run_commands(char **command, int i, char *ptr);
+char **remove_tild(char **argv, int j);
+char *remove_dollar(char *argv);
 char **new_array(int size);
 int array_len(char **array);
 void print_list(void);
@@ -39,10 +42,9 @@ t_env_lst *copy_env(char **envp);
 void list_push_back(t_env_lst *new_node);
 char *get_value_by_name(char *name);
 int check_dir(DIR *dir_ptr, char *name);
-char *find_a_file(char *dir, char *name);
+char *find_a_file(char *dir, char *name, int i);
 int execute_files(char **argv);
 void free_list(void);
-void run_commands(char **command);
 void new_process(char *process, char **argv);
 char **list_to_array(void);
 int list_len(t_env_lst *lst);
