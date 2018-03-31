@@ -6,7 +6,7 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 15:49:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/30 21:50:42 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/03/31 14:13:16 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char			*remove_dollar(char *argv)
 	if (!string)
 	{
 		find = ft_strrchr(argv, '=');
-		string = ft_strjoin(first_part, ++find);
+		if (find)
+			string = ft_strjoin(first_part, ++find);
 	}
 	ft_strdel(&first_part);
 	return (string);
