@@ -6,7 +6,7 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 16:30:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/30 21:46:15 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:31:41 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,7 @@ int		execute_files(char **argv, int ret)
 	get_dir_and_file(argv, &dir, &file);
 	if ((full_path = find_a_file(dir, file, -1, 0)))
 	{
-		if (access(full_path, X_OK) == -1)
-		{
-			ft_printf("minishell: permission denied: %s\n", file);
-			ft_strdel(&full_path);
-		}
-		else
-			new_process(full_path, argv);
-		ret = OK;
+		if_else_help(&full_path, &ret, argv, file);
 	}
 	else if (ft_strchr(argv[0], '/'))
 	{

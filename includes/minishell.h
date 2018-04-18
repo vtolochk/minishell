@@ -6,7 +6,7 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 20:09:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/30 21:54:36 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:35:57 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int				bi_env(char **argv);
 int				bi_setenv(char **argv);
 int				bi_unsetenv(char **argv, t_env_lst *list);
 int				bi_cd(char **argv);
+int				is_dir(char *full_path);
+void			if_else_help(char **path, int *ret, char **argv, char *file);
 
 #endif

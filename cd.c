@@ -6,7 +6,7 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 16:22:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/03/30 21:34:24 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:33:19 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static int		check_perm_and_existence(char **argv, char *tild_sub)
 	}
 	else if (lstat(tild_sub ? tild_sub : argv[1], &buf) == -1)
 	{
-		ft_printf("cd: no such file or directory: \
-		%s\n", tild_sub ? tild_sub : argv[1]);
+		ft_printf("cd: no such file or directory: %s\n", \
+		tild_sub ? tild_sub : argv[1]);
 		return (FAIL);
 	}
 	else if (!(buf.st_mode & S_IXUSR))
 	{
-		ft_printf("cd: permission denied: \
-		%s\n", tild_sub ? tild_sub : argv[1]);
+		ft_printf("cd: permission denied: %s\n", \
+		tild_sub ? tild_sub : argv[1]);
 		return (FAIL);
 	}
 	else if (S_ISREG(buf.st_mode))
@@ -58,9 +58,11 @@ static char		*substitute_tild(char *path)
 
 static int		regular_case(char **argv)
 {
+	char *f;
 	char *new_path;
 
-	if (ft_strchr(argv[1], '~'))
+	if ((f = ft_strchr(argv[1], '~')) && ((*(f + 1) == '/') ||
+	(*(f + 1) == ' ' || (*(f + 1) == '\t'))))
 	{
 		new_path = substitute_tild(argv[1]);
 		if (check_perm_and_existence(argv, new_path) == OK)

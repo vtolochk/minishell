@@ -74,8 +74,7 @@ char			*remove_dollar(char *argv)
 	}
 	if (!string)
 	{
-		find = ft_strrchr(argv, '=');
-		if (find)
+		if ((find = ft_strrchr(argv, '=')))
 			string = ft_strjoin(first_part, ++find);
 	}
 	ft_strdel(&first_part);
