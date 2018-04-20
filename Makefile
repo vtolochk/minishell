@@ -6,7 +6,7 @@
 #    By: vtolochk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 20:20:18 by vtolochk          #+#    #+#              #
-#    Updated: 2018/04/17 12:04:47 by vtolochk         ###   ########.fr        #
+#    Updated: 2018/04/19 13:34:14 by vtolochk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +29,15 @@ CFLAGS = -Wall -Werror -Wextra -Iincludes
 
 CC = gcc
 
-all: $(NAME)
+all: lib $(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) libft/libft.a
 	gcc $(CFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
 
-$(LIBFT):
+lib:
 	make -C ./libft/
 
 clean:

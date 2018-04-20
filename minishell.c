@@ -6,7 +6,7 @@
 /*   By: vtolochk <vtolochk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 20:22:00 by vtolochk          #+#    #+#             */
-/*   Updated: 2018/04/18 20:30:58 by vtolochk         ###   ########.fr       */
+/*   Updated: 2018/04/19 13:13:21 by vtolochk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,23 @@ static void		print_prompt(void)
 	char *pwd;
 	char *find;
 	char *home;
-	char *log_name;
+	char *name;
+	char host[255];
 
+	gethostname(host, 255);
 	pwd = get_value_by_name("PWD");
 	home = get_value_by_name("HOME");
-	log_name = get_value_by_name("LOGNAME");
+	name = get_value_by_name("LOGNAME");
 	if ((find = ft_strstr(++pwd, ++home)))
 	{
 		pwd = ft_strjoin("~", find + ft_strlen(home));
-		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%$>\n", ++log_name, pwd);
+		ft_printf("%magenta%[%s]\
+%yellow%[%s]%green%[%s]%eoc%$>\n", ++name, host, pwd);
 		ft_strdel(&pwd);
 	}
 	else
-		ft_printf("%magenta%[%s]%eoc%%green%[%s]%eoc%$>\n", ++log_name, pwd);
+		ft_printf("%magenta%[%s]\
+%yellow%[%s]%eoc%%green%[%s]%eoc%$>\n", ++name, host, pwd);
 }
 
 static void		print_signal(int signal)
